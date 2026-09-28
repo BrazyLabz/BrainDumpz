@@ -1,0 +1,4565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#000000">
+    <link rel="apple-touch-icon" href="icon-192.png">
+
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Brain Dumpz</title>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+html {
+    background: #000;
+}
+
+body {
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            #151515 0%,
+            #070707 35%,
+            #000 70%
+        );
+
+    color: #fff;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    overflow-x: hidden;
+}
+
+button,
+textarea,
+input {
+    font-family: inherit;
+}
+
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* =========================================================
+   APP
+========================================================= */
+
+.app {
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.page-window {
+    width: 100%;
+    height: 100vh;
+    min-height: 100vh;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: none;
+}
+
+.page-slider {
+    display: flex;
+
+    width: 300vw;
+    min-width: 300vw;
+
+    align-items: flex-start;
+
+    transition:
+        transform 0.45s cubic-bezier(.22, 1, .36, 1);
+}
+
+.page {
+    width: 100vw;
+    min-width: 100vw;
+    max-width: 100vw;
+
+    flex: 0 0 100vw;
+
+    padding:
+        30px
+        30px
+        150px;
+
+    overflow: visible;
+}
+
+
+/* =========================================================
+   BRAIN DUMP
+========================================================= */
+
+.dump-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dump-page > * {
+    width: 100%;
+    max-width: 850px;
+}
+
+.header {
+    margin-top: 10px;
+    margin-bottom: 22px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 100px;
+    height: 100px;
+
+    object-fit: contain;
+
+    filter:
+        drop-shadow(
+            0 8px 22px rgba(255,255,255,.06)
+        );
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.brand-text h1 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -.3px;
+}
+
+.tagline {
+    color: #666;
+    font-size: 12px;
+}
+
+.dump-box {
+    background:
+        linear-gradient(
+            145deg,
+            #141414,
+            #0d0d0d
+        );
+
+    border: 1px solid #292929;
+
+    border-radius: 20px;
+
+    padding: 20px;
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.28),
+        inset 0 1px 0 rgba(255,255,255,.025);
+
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease,
+        transform .25s ease;
+}
+
+.dump-box:focus-within {
+    border-color: #3b3b3b;
+
+    box-shadow:
+        0 18px 50px rgba(0,0,0,.38),
+        inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+.textarea-wrapper {
+    position: relative;
+}
+
+textarea {
+    width: 100%;
+    min-height: 260px;
+
+    resize: vertical;
+
+    background: transparent;
+
+    border: none;
+    outline: none;
+
+    color: white;
+
+    font-size: 18px;
+    line-height: 1.6;
+
+    padding-right: 55px;
+
+    caret-color: white;
+}
+
+textarea::placeholder {
+    color: #555;
+    transition: color .2s ease;
+}
+
+textarea:focus::placeholder {
+    color: #444;
+}
+
+
+/* =========================================================
+   MICROPHONE
+========================================================= */
+
+.mic-button {
+    position: absolute;
+
+    right: 10px;
+    bottom: 10px;
+
+    width: 42px;
+    height: 42px;
+
+    padding: 0;
+
+    border-radius: 50%;
+
+    border: 1px solid #333;
+
+    background: #181818;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    transition:
+        transform .18s cubic-bezier(.22,1,.36,1),
+        background .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+.mic-button:hover {
+    background: #222;
+    border-color: #555;
+
+    transform:
+        translateY(-2px)
+        scale(1.03);
+}
+
+.mic-button:active {
+    transform: scale(.91);
+}
+
+.mic-button.listening {
+    background: #ff3b3b;
+    border-color: #ff3b3b;
+
+    animation:
+        micPulse 1.3s infinite;
+
+    box-shadow:
+        0 0 20px rgba(255,59,59,.18);
+}
+
+@keyframes micPulse {
+
+    0% {
+        box-shadow:
+            0 0 0 0 rgba(255,59,59,.5);
+    }
+
+    70% {
+        box-shadow:
+            0 0 0 12px rgba(255,59,59,0);
+    }
+
+    100% {
+        box-shadow:
+            0 0 0 0 rgba(255,59,59,0);
+    }
+}
+
+#voiceStatus.listening {
+    color: #ff5555;
+}
+
+
+/* =========================================================
+   BOTTOM OF DUMP
+========================================================= */
+
+.bottom {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 15px;
+
+    margin-top: 15px;
+}
+
+.hint {
+    color: #555;
+    font-size: 13px;
+
+    transition:
+        color .25s ease;
+}
+
+.organize-button {
+    border: none;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #dedede
+        );
+
+    color: #050505;
+
+    padding:
+        13px
+        24px;
+
+    border-radius: 11px;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 25px rgba(255,255,255,.06);
+
+    transition:
+        transform .18s cubic-bezier(.22,1,.36,1),
+        box-shadow .2s ease,
+        background .2s ease;
+}
+
+.organize-button:hover {
+    background: #fff;
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 12px 30px rgba(255,255,255,.1);
+}
+
+.organize-button:active {
+    transform:
+        translateY(1px)
+        scale(.97);
+
+    box-shadow:
+        0 4px 15px rgba(255,255,255,.05);
+}
+
+
+/* =========================================================
+   TASK PAGE
+========================================================= */
+
+.tasks-page {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.page-title {
+    margin-bottom: 20px;
+}
+
+.page-title h2 {
+    font-size: 28px;
+    margin-bottom: 5px;
+    letter-spacing: -.5px;
+}
+
+.page-title p {
+    color: #666;
+    font-size: 13px;
+}
+
+.results {
+    display: block;
+}
+
+
+/* =========================================================
+   CATEGORY SECTIONS
+========================================================= */
+
+.section {
+    width: 100%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #131313,
+            #0d0d0d
+        );
+
+    border: 1px solid #292929;
+
+    border-radius: 16px;
+
+    padding: 20px;
+
+    margin-bottom: 12px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.16);
+
+    transition:
+        transform .22s cubic-bezier(.22,1,.36,1),
+        border-color .22s ease,
+        box-shadow .22s ease;
+}
+
+.section:hover {
+    border-color: #353535;
+
+    box-shadow:
+        0 14px 35px rgba(0,0,0,.23);
+}
+
+.section h2 {
+    margin: 0;
+
+    font-size: 16px;
+    color: #fff;
+}
+
+.category-header {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 12px;
+}
+
+.category-header h2 {
+    margin: 0;
+}
+
+
+/* =========================================================
+   ADD ITEM BUTTON
+========================================================= */
+
+.add-item {
+    background: #151515;
+
+    color: #888;
+
+    border: 1px solid #333;
+
+    border-radius: 8px;
+
+    padding:
+        7px
+        11px;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition:
+        transform .17s cubic-bezier(.22,1,.36,1),
+        background .2s ease,
+        color .2s ease,
+        border-color .2s ease;
+}
+
+.add-item:hover {
+    background: #202020;
+
+    color: #fff;
+
+    border-color: #555;
+
+    transform:
+        translateY(-1px);
+}
+
+.add-item:active {
+    transform:
+        translateY(1px)
+        scale(.96);
+}
+
+
+/* =========================================================
+   ITEM
+========================================================= */
+
+.item-wrapper {
+    position: relative;
+
+    width: 100%;
+
+    overflow: hidden;
+
+    border-radius: 12px;
+
+    margin-bottom: 8px;
+}
+
+.delete-background {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: flex-end;
+
+    padding-right: 22px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #1c0b0b,
+            #4a1111
+        );
+
+    color: #ff5555;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    letter-spacing: .5px;
+
+    border-radius: 12px;
+
+    pointer-events: none;
+}
+
+.item {
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #181818,
+            #121212
+        );
+
+    border: 1px solid #252525;
+
+    border-radius: 12px;
+
+    padding: 14px;
+
+    color: #ddd;
+
+    touch-action: pan-y;
+
+    user-select: none;
+    -webkit-user-select: none;
+
+    cursor: pointer;
+
+    transition:
+        transform .15s ease,
+        background .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+.item:hover {
+    background: #1c1c1c;
+
+    border-color: #333;
+}
+
+.item.swiping {
+    transition: none !important;
+}
+
+.task-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.checkbox {
+    flex:
+        0 0 auto;
+
+    color: #888;
+
+    font-size: 18px;
+}
+
+.task-text {
+    flex: 1;
+
+    min-width: 0;
+
+    word-break: break-word;
+}
+
+.item.completed {
+    opacity: .45;
+}
+
+.item.completed .task-text {
+    text-decoration: line-through;
+}
+
+.empty-message {
+    color: #555;
+
+    font-size: 13px;
+
+    padding: 6px 0;
+}
+
+
+/* =========================================================
+   TASK ACTION BUTTONS
+========================================================= */
+
+.task-action-buttons {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+
+/* SAVE */
+
+.save-list-button {
+    background: #111;
+
+    color: #aaa;
+
+    border: 1px solid #333;
+
+    padding:
+        10px
+        18px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    transition:
+        transform .17s cubic-bezier(.22,1,.36,1),
+        background .2s ease,
+        color .2s ease,
+        border-color .2s ease;
+}
+
+.save-list-button:hover {
+    background: #1b1b1b;
+
+    color: white;
+
+    border-color: #4a4a4a;
+
+    transform:
+        translateY(-2px);
+}
+
+.save-list-button:active {
+    transform:
+        translateY(1px)
+        scale(.96);
+}
+
+
+/* CLEAR */
+
+.clear-all-button {
+    background: transparent;
+
+    color: #777;
+
+    border: 1px solid #333;
+
+    padding:
+        10px
+        18px;
+
+    border-radius: 10px;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        transform .17s cubic-bezier(.22,1,.36,1),
+        background .2s ease,
+        color .2s ease,
+        border-color .2s ease;
+}
+
+.clear-all-button:hover {
+    color: #ff5555;
+
+    border-color: #ff3b3b;
+
+    background: #160909;
+
+    transform:
+        translateY(-2px);
+}
+
+.clear-all-button:active {
+    transform:
+        translateY(1px)
+        scale(.96);
+}
+
+
+/* =========================================================
+   ADD CATEGORY
+========================================================= */
+
+.add-category-button {
+    width: 100%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #111,
+            #0b0b0b
+        );
+
+    color: #888;
+
+    border: 1px dashed #333;
+
+    border-radius: 14px;
+
+    padding: 15px;
+
+    margin-top: 4px;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s cubic-bezier(.22,1,.36,1),
+        background .2s ease,
+        color .2s ease,
+        border-color .2s ease;
+}
+
+.add-category-button:hover {
+    background: #161616;
+
+    color: white;
+
+    border-color: #555;
+
+    transform:
+        translateY(-2px);
+}
+
+.add-category-button:active {
+    transform:
+        translateY(1px)
+        scale(.985);
+}
+
+
+/* =========================================================
+   CUSTOM CATEGORY
+========================================================= */
+
+.custom-category {
+    animation:
+        categoryAppear .35s cubic-bezier(.22,1,.36,1);
+}
+
+@keyframes categoryAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.custom-category .category-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.delete-category-button {
+    background: transparent;
+
+    color: #555;
+
+    border: none;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    padding: 5px;
+
+    border-radius: 6px;
+
+    transition:
+        color .2s ease,
+        background .2s ease,
+        transform .17s ease;
+}
+
+.delete-category-button:hover {
+    color: #ff5555;
+
+    background: #190909;
+
+    transform: scale(1.05);
+}
+
+.delete-category-button:active {
+    transform: scale(.9);
+}
+
+
+/* =========================================================
+   MORE PAGE
+========================================================= */
+
+.more-page {
+    background: transparent;
+    max-width: none;
+}
+
+.more-page-inner {
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.more-menu {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.more-menu-item {
+    width: 100%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #131313,
+            #0d0d0d
+        );
+
+    color: white;
+
+    border: 1px solid #292929;
+
+    border-radius: 15px;
+
+    padding: 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    font-size: 16px;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s cubic-bezier(.22,1,.36,1),
+        background .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+.more-menu-item:hover {
+    background: #181818;
+
+    border-color: #444;
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.25);
+}
+
+.more-menu-item:active {
+    transform:
+        translateY(1px)
+        scale(.985);
+}
+
+.more-menu-item span:first-child {
+    font-size: 21px;
+}
+
+
+/* =========================================================
+   SAVED LISTS
+========================================================= */
+
+.saved-lists-header {
+    margin-bottom: 25px;
+}
+
+.back-more-button {
+    background: #111;
+
+    color: #aaa;
+
+    border: 1px solid #333;
+
+    padding:
+        10px
+        16px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    margin-bottom: 20px;
+
+    transition:
+        transform .17s ease,
+        background .2s ease,
+        color .2s ease,
+        border-color .2s ease;
+}
+
+.back-more-button:hover {
+    background: #181818;
+
+    color: white;
+
+    border-color: #444;
+
+    transform:
+        translateX(-2px);
+}
+
+.back-more-button:active {
+    transform:
+        translateX(-1px)
+        scale(.97);
+}
+
+.saved-lists-header h2 {
+    font-size: 28px;
+
+    margin-bottom: 5px;
+}
+
+.saved-lists-header p {
+    color: #666;
+
+    font-size: 13px;
+}
+
+.saved-list-card {
+    background:
+        linear-gradient(
+            145deg,
+            #131313,
+            #0d0d0d
+        );
+
+    border: 1px solid #292929;
+
+    border-radius: 15px;
+
+    padding: 18px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 10px;
+
+    transition:
+        transform .2s ease,
+        border-color .2s ease;
+}
+
+.saved-list-card:hover {
+    border-color: #3a3a3a;
+
+    transform:
+        translateY(-1px);
+}
+
+.saved-list-info {
+    min-width: 0;
+}
+
+.saved-list-name {
+    font-size: 16px;
+
+    font-weight: bold;
+
+    word-break: break-word;
+}
+
+.saved-list-date {
+    color: #666;
+
+    font-size: 12px;
+
+    margin-top: 5px;
+}
+
+.saved-list-buttons {
+    display: flex;
+
+    gap: 8px;
+
+    flex-shrink: 0;
+}
+
+.load-list-button,
+.delete-list-button {
+    border: 1px solid #333;
+
+    padding:
+        9px
+        13px;
+
+    border-radius: 8px;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        transform .16s ease,
+        background .2s ease,
+        border-color .2s ease;
+}
+
+.load-list-button {
+    background: white;
+
+    color: black;
+}
+
+.load-list-button:hover {
+    background: #eee;
+
+    transform:
+        translateY(-1px);
+}
+
+.delete-list-button {
+    background: transparent;
+
+    color: #ff5555;
+
+    border-color: #4a2020;
+}
+
+.delete-list-button:hover {
+    background: #190909;
+
+    transform:
+        translateY(-1px);
+}
+
+.load-list-button:active,
+.delete-list-button:active {
+    transform:
+        scale(.95);
+}
+
+.no-saved-lists {
+    background: #111;
+
+    border: 1px solid #292929;
+
+    border-radius: 15px;
+
+    padding: 25px;
+
+    color: #666;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   BOTTOM NAV
+========================================================= */
+
+.bottom-nav {
+    position: fixed;
+
+    left: 50%;
+    bottom: 18px;
+
+    transform: translateX(-50%);
+
+    width:
+        min(
+            500px,
+            calc(100vw - 30px)
+        );
+
+    height: 68px;
+
+    background:
+        rgba(17,17,17,.94);
+
+    border: 1px solid #292929;
+
+    border-radius: 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding:
+        0 28px;
+
+    backdrop-filter:
+        blur(16px);
+
+    -webkit-backdrop-filter:
+        blur(16px);
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.4);
+
+    z-index: 9999;
+
+    overflow: visible;
+}
+
+
+/* NAV BUTTONS */
+
+.nav-button {
+    background: transparent;
+
+    color: #777;
+
+    border: none;
+    outline: none;
+
+    width: 70px;
+    height: 60px;
+
+    padding: 0;
+
+    flex:
+        0 0 70px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 4px;
+
+    cursor: pointer;
+
+    transition:
+        color .2s ease,
+        transform .2s cubic-bezier(.22,1,.36,1);
+}
+
+.nav-button:hover {
+    background: transparent;
+
+    color: white;
+
+    transform:
+        translateY(-2px);
+}
+
+.nav-button:active {
+    transform:
+        translateY(1px)
+        scale(.94);
+}
+
+.nav-icon {
+    font-size: 21px;
+
+    line-height: 1;
+}
+
+.nav-label {
+    font-size: 9px;
+
+    font-weight: bold;
+
+    letter-spacing: .5px;
+}
+
+
+/* CENTER */
+
+.nav-center {
+    width: 66px;
+    height: 66px;
+
+    margin-top: -28px;
+
+    padding: 6px;
+
+    border-radius: 50%;
+
+    background: #111;
+
+    border: 1px solid #3a3a3a;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    flex:
+        0 0 66px;
+
+    transition:
+        transform .25s cubic-bezier(.22,1,.36,1),
+        background .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,.55);
+
+    position: relative;
+
+    z-index: 10000;
+
+    outline: none;
+}
+
+.nav-center:hover {
+    background: #151515;
+
+    border-color: #555;
+
+    transform:
+        translateY(-5px)
+        scale(1.03);
+
+    box-shadow:
+        0 10px 28px rgba(0,0,0,.65);
+}
+
+.nav-center:active {
+    transform:
+        translateY(-1px)
+        scale(.94);
+}
+
+.nav-center img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    border-radius: 50%;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .page {
+        width: 100vw;
+        min-width: 100vw;
+        max-width: 100vw;
+
+        flex:
+            0 0 100vw;
+
+        padding:
+            20px
+            15px
+            160px;
+
+        overflow: visible;
+    }
+
+    .page-window {
+        width: 100vw;
+        max-width: 100vw;
+
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .page-slider {
+        width: 300vw;
+        min-width: 300vw;
+    }
+
+
+    /* BRAIN DUMP */
+
+    .logo {
+        width: 82px;
+        height: 82px;
+    }
+
+    .brand-text h1 {
+        font-size: 20px;
+    }
+
+    .dump-box {
+        padding: 16px;
+    }
+
+    textarea {
+        min-height: 230px;
+        font-size: 17px;
+    }
+
+    .bottom {
+        align-items: flex-end;
+    }
+
+    .hint {
+        max-width: 55%;
+    }
+
+    .organize-button {
+        padding:
+            12px
+            17px;
+
+        font-size: 13px;
+    }
+
+
+    /* TASKS */
+
+    .page-title h2 {
+        font-size: 25px;
+    }
+
+    .section {
+        padding: 16px;
+
+        border-radius: 15px;
+    }
+
+    .category-header h2 {
+        font-size: 14px;
+    }
+
+    .task-action-buttons {
+        width: 100%;
+
+        gap: 8px;
+
+        margin-top: 18px;
+        margin-bottom: 25px;
+    }
+
+    .save-list-button,
+    .clear-all-button {
+        padding:
+            9px
+            13px;
+
+        font-size: 10px;
+
+        white-space: nowrap;
+    }
+
+
+    /* NAV */
+
+    .bottom-nav {
+        left: 8px;
+        right: 8px;
+
+        width: auto;
+        max-width: none;
+
+        bottom:
+            calc(
+                10px +
+                env(safe-area-inset-bottom)
+            );
+
+        transform: none;
+
+        height: 64px;
+
+        padding:
+            0 10px;
+
+        box-sizing: border-box;
+    }
+
+    .nav-button {
+        width: 58px;
+        min-width: 58px;
+
+        flex:
+            0 0 58px;
+
+        height: 58px;
+    }
+
+    .nav-center {
+        width: 62px;
+        height: 62px;
+
+        min-width: 62px;
+
+        flex:
+            0 0 62px;
+
+        margin-top: -22px;
+
+        padding: 5px;
+    }
+
+
+    /* SAVED LISTS */
+
+    .saved-list-card {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .saved-list-buttons {
+        width: 100%;
+    }
+
+    .load-list-button,
+    .delete-list-button {
+        flex: 1;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .bottom-nav {
+        left: 7px;
+        right: 7px;
+
+        width: auto;
+
+        padding-left: 7px;
+        padding-right: 7px;
+    }
+
+    .nav-button {
+        width: 52px;
+        min-width: 52px;
+
+        flex-basis: 52px;
+    }
+
+    .nav-center {
+        width: 58px;
+        height: 58px;
+
+        min-width: 58px;
+
+        flex-basis: 58px;
+    }
+
+    .task-action-buttons {
+        gap: 6px;
+    }
+
+    .save-list-button,
+    .clear-all-button {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+<main class="app">
+
+    <div class="page-window">
+
+        <div
+            class="page-slider"
+            id="pageSlider"
+        >
+
+
+            <!-- =================================================
+                 MY TASKS
+            ================================================= -->
+
+            <section class="page tasks-page">
+
+                <div class="page-title">
+
+                    <h2>My Tasks</h2>
+
+                    <p>
+                        Everything your brain dumped.
+                    </p>
+
+                </div>
+
+
+                <div id="results">
+
+
+                    <!-- =================================================
+                         PERMANENT TO DO
+                    ================================================= -->
+
+                    <div class="section">
+
+                        <div class="category-header">
+
+                            <h2>
+                                ✅ TO DO
+                            </h2>
+
+                            <button
+                                type="button"
+                                class="add-item"
+                                onclick="addItem('tasks')"
+                            >
+                                + ADD
+                            </button>
+
+                        </div>
+
+                        <div id="tasks"></div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         PERMANENT SHOPPING
+                    ================================================= -->
+
+                    <div class="section">
+
+                        <div class="category-header">
+
+                            <h2>
+                                🛒 SHOPPING LIST
+                            </h2>
+
+                            <button
+                                type="button"
+                                class="add-item"
+                                onclick="addItem('shopping')"
+                            >
+                                + ADD
+                            </button>
+
+                        </div>
+
+                        <div id="shopping"></div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         CUSTOM CATEGORIES
+                    ================================================= -->
+
+                    <div id="customCategories"></div>
+
+
+                    <!-- =================================================
+                         ADD CATEGORY
+                    ================================================= -->
+
+                    <button
+                        type="button"
+                        class="add-category-button"
+                        onclick="addCategory()"
+                    >
+                        ＋ ADD CATEGORY
+                    </button>
+
+                </div>
+
+
+                <!-- =================================================
+                     ACTION BUTTONS
+                ================================================= -->
+
+                <div class="task-action-buttons">
+
+                    <button
+                        type="button"
+                        class="save-list-button"
+                        onclick="saveCurrentList()"
+                    >
+                        💾 SAVE LIST
+                    </button>
+
+                    <button
+                        type="button"
+                        class="clear-all-button"
+                        onclick="clearAllData()"
+                    >
+                        🗑️ CLEAR ALL
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 BRAIN DUMP
+            ================================================= -->
+
+            <section class="page dump-page">
+
+                <div class="header">
+
+                    <div class="brand">
+
+                        <img
+                            src="BDz.png"
+                            alt="Brain Dump"
+                            class="logo"
+                        >
+
+                        <div class="brand-text">
+
+                            <h1>
+                                Brain Dumpz
+                            </h1>
+
+                            <div class="tagline">
+                                Get it out. Get organized.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dump-box">
+
+                    <div class="textarea-wrapper">
+
+                        <textarea
+                            id="brainInput"
+                            placeholder="Dump everything on your mind..."
+                            autocomplete="off"
+                            spellcheck="true"
+                        ></textarea>
+
+
+                        <button
+                            type="button"
+                            id="micButton"
+                            class="mic-button"
+                            onclick="toggleVoiceInput()"
+                            aria-label="Start voice input"
+                        >
+                            🎙️
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="bottom">
+
+                    <div
+                        id="voiceStatus"
+                        class="hint"
+                    >
+                        Don't organize it. Just dump it.
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="organize-button"
+                        onclick="organizeDump()"
+                    >
+                        ORGANIZE
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 MORE
+            ================================================= -->
+
+            <section class="page more-page">
+
+                <div class="more-page-inner">
+
+                    <div id="moreContent">
+
+                        <div class="page-title">
+
+                            <h2>
+                                MORE
+                            </h2>
+
+                            <p>
+                                More Brain Dump options
+                            </p>
+
+                        </div>
+
+
+                        <div class="more-menu">
+
+                            <button
+                                class="more-menu-item"
+                                onclick="openSavedLists()"
+                            >
+                                <span>📋</span>
+                                <span>Saved Lists</span>
+                            </button>
+
+
+                            <button
+                                class="more-menu-item"
+                                onclick="comingSoon('Settings')"
+                            >
+                                <span>⚙️</span>
+                                <span>Settings</span>
+                            </button>
+
+
+                            <button
+                                class="more-menu-item"
+                                onclick="comingSoon('About')"
+                            >
+                                <span>ℹ️</span>
+                                <span>About</span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         BOTTOM NAVIGATION
+    ================================================= -->
+
+    <nav class="bottom-nav">
+
+        <button
+            type="button"
+            class="nav-button"
+            onclick="showPage('tasks')"
+        >
+
+            <span class="nav-icon">
+                ✓
+            </span>
+
+            <span class="nav-label">
+                TASKS
+            </span>
+
+        </button>
+
+
+        <button
+            type="button"
+            class="nav-center"
+            onclick="showPage('dump')"
+            aria-label="Brain Dump"
+        >
+
+            <img
+                src="BDz.png"
+                alt="Brain Dump"
+            >
+
+        </button>
+
+
+        <button
+            type="button"
+            class="nav-button"
+            onclick="showPage('more')"
+        >
+
+            <span class="nav-icon">
+                ☷
+            </span>
+
+            <span class="nav-label">
+                MORE
+            </span>
+
+        </button>
+
+    </nav>
+
+</main>
+
+
+<script>
+
+/* =========================================================
+   DATA
+========================================================= */
+
+let tasks = [];
+
+let shopping = [];
+
+let customCategories = [];
+
+let savedLists = [];
+
+let recognition = null;
+
+let isListening = false;
+
+
+/* =========================================================
+   PAGE NAVIGATION
+========================================================= */
+
+function showPage(page) {
+
+    const slider =
+        document.getElementById(
+            "pageSlider"
+        );
+
+    const pageWindow =
+        document.querySelector(
+            ".page-window"
+        );
+
+    if (!slider) {
+        return;
+    }
+
+
+    if (pageWindow) {
+
+        pageWindow.scrollTo({
+            top: 0,
+            behavior: "instant"
+        });
+
+    }
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "instant"
+    });
+
+
+    if (page === "tasks") {
+
+        slider.style.transform =
+            "translateX(0)";
+
+    }
+
+
+    if (page === "dump") {
+
+        slider.style.transform =
+            "translateX(-100vw)";
+
+    }
+
+
+    if (page === "more") {
+
+        slider.style.transform =
+            "translateX(-200vw)";
+
+    }
+
+}
+
+
+/* =========================================================
+   DATA STORAGE
+========================================================= */
+
+function loadData() {
+
+    const savedData =
+        localStorage.getItem(
+            "brainDumpData"
+        );
+
+
+    if (!savedData) {
+
+        displayAll();
+
+        return;
+
+    }
+
+
+    try {
+
+        const data =
+            JSON.parse(savedData);
+
+
+        tasks =
+            Array.isArray(data.tasks)
+                ? data.tasks
+                : [];
+
+
+        shopping =
+            Array.isArray(data.shopping)
+                ? data.shopping
+                : [];
+
+
+        customCategories =
+            Array.isArray(
+                data.customCategories
+            )
+                ? data.customCategories
+                : [];
+
+
+    } catch (error) {
+
+        console.error(
+            "Could not load Brain Dump data.",
+            error
+        );
+
+    }
+
+
+    displayAll();
+
+}
+
+
+function saveData() {
+
+    const data = {
+
+        tasks:
+            tasks,
+
+        shopping:
+            shopping,
+
+        customCategories:
+            customCategories
+
+    };
+
+
+    localStorage.setItem(
+        "brainDumpData",
+        JSON.stringify(data)
+    );
+
+}
+
+
+/* =========================================================
+   CUSTOM CATEGORIES
+========================================================= */
+
+function addCategory() {
+
+    const name =
+        prompt(
+            "What would you like to call your new category?"
+        );
+
+
+    if (
+        !name ||
+        !name.trim()
+    ) {
+
+        return;
+
+    }
+
+
+    const cleanName =
+        name.trim();
+
+
+    const exists =
+        customCategories.some(
+            category =>
+                category.name.toLowerCase() ===
+                cleanName.toLowerCase()
+        );
+
+
+    if (
+        exists ||
+        cleanName.toLowerCase() === "to do" ||
+        cleanName.toLowerCase() === "shopping list"
+    ) {
+
+        alert(
+            "That category already exists."
+        );
+
+        return;
+
+    }
+
+
+    customCategories.push({
+
+        id:
+            Date.now(),
+
+        name:
+            cleanName,
+
+        items:
+            []
+
+    });
+
+
+    saveData();
+
+    displayAll();
+
+}
+
+
+function deleteCategory(id) {
+
+    const category =
+        customCategories.find(
+            category =>
+                category.id === id
+        );
+
+
+    if (!category) {
+        return;
+    }
+
+
+    const confirmed =
+        confirm(
+            `Delete "${category.name}"?\n\n` +
+            "All items inside this category will also be deleted."
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    customCategories =
+        customCategories.filter(
+            category =>
+                category.id !== id
+        );
+
+
+    saveData();
+
+    displayAll();
+
+}
+
+
+function addCustomItem(id) {
+
+    const category =
+        customCategories.find(
+            category =>
+                category.id === id
+        );
+
+
+    if (!category) {
+        return;
+    }
+
+
+    const text =
+        prompt(
+            `Add an item to "${category.name}":`
+        );
+
+
+    if (
+        !text ||
+        !text.trim()
+    ) {
+
+        return;
+
+    }
+
+
+    const value =
+        text.trim();
+
+
+    category.items.push(value);
+
+
+    saveData();
+
+    displayAll();
+
+}
+
+
+/* =========================================================
+   DISPLAY ALL
+========================================================= */
+
+function displayAll() {
+
+    displayItems(
+        "tasks",
+        tasks,
+        "No tasks yet."
+    );
+
+
+    displayItems(
+        "shopping",
+        shopping,
+        "No shopping items yet."
+    );
+
+
+    displayCustomCategories();
+
+}
+
+
+/* =========================================================
+   DISPLAY PERMANENT CATEGORIES
+========================================================= */
+
+function displayItems(
+    category,
+    items,
+    emptyMessage
+) {
+
+    const element =
+        document.getElementById(
+            category
+        );
+
+
+    if (!element) {
+        return;
+    }
+
+
+    if (!items.length) {
+
+        element.innerHTML = `
+
+            <div class="empty-message">
+                ${escapeHTML(emptyMessage)}
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    element.innerHTML =
+        items.map(
+            (item, index) => `
+
+                <div class="item-wrapper">
+
+                    <div class="delete-background">
+                        DELETE
+                    </div>
+
+
+                    <div
+                        class="item task-item"
+                        data-index="${index}"
+                    >
+
+                        <span class="checkbox">
+                            ☐
+                        </span>
+
+
+                        <span class="task-text">
+                            ${escapeHTML(item)}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            `
+        ).join("");
+
+
+    element
+        .querySelectorAll(".item-wrapper")
+        .forEach(
+            (wrapper, index) => {
+
+                const row =
+                    wrapper.querySelector(
+                        ".item"
+                    );
+
+
+                let suppressClick =
+                    false;
+
+
+                row.addEventListener(
+                    "click",
+                    function() {
+
+                        if (
+                            suppressClick
+                        ) {
+
+                            suppressClick =
+                                false;
+
+                            return;
+
+                        }
+
+
+                        toggleItem(row);
+
+                    }
+                );
+
+
+                setupSwipeDelete(
+                    row,
+                    category,
+                    index,
+                    function() {
+
+                        suppressClick =
+                            true;
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   DISPLAY CUSTOM CATEGORIES
+========================================================= */
+
+function displayCustomCategories() {
+
+    const container =
+        document.getElementById(
+            "customCategories"
+        );
+
+
+    if (!container) {
+        return;
+    }
+
+
+    if (!customCategories.length) {
+
+        container.innerHTML =
+            "";
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        customCategories.map(
+            category => `
+
+                <div
+                    class="section custom-category"
+                    data-category-id="${category.id}"
+                >
+
+                    <div class="category-header">
+
+                        <h2>
+                            📁
+                            ${escapeHTML(category.name)}
+                        </h2>
+
+
+                        <div
+                            style="
+                                display:flex;
+                                align-items:center;
+                                gap:5px;
+                            "
+                        >
+
+                            <button
+                                type="button"
+                                class="add-item"
+                                onclick="addCustomItem(${category.id})"
+                            >
+                                + ADD
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="delete-category-button"
+                                onclick="deleteCategory(${category.id})"
+                                aria-label="Delete category"
+                            >
+                                ✕
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="custom-${category.id}"
+                    >
+
+                        ${
+                            category.items.length
+                                ? ""
+                                : `
+                                    <div class="empty-message">
+                                        No items yet.
+                                    </div>
+                                `
+                        }
+
+                    </div>
+
+                </div>
+
+            `
+        ).join("");
+
+
+    customCategories.forEach(
+        category => {
+
+            if (
+                !category.items.length
+            ) {
+                return;
+            }
+
+
+            const element =
+                document.getElementById(
+                    `custom-${category.id}`
+                );
+
+
+            if (!element) {
+                return;
+            }
+
+
+            element.innerHTML =
+                category.items.map(
+                    (item, index) => `
+
+                        <div class="item-wrapper">
+
+                            <div class="delete-background">
+                                DELETE
+                            </div>
+
+
+                            <div
+                                class="item task-item"
+                            >
+
+                                <span class="checkbox">
+                                    ☐
+                                </span>
+
+
+                                <span class="task-text">
+                                    ${escapeHTML(item)}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    `
+                ).join("");
+
+
+            element
+                .querySelectorAll(".item-wrapper")
+                .forEach(
+                    (wrapper, index) => {
+
+                        const row =
+                            wrapper.querySelector(
+                                ".item"
+                            );
+
+
+                        let startX = 0;
+                        let currentX = 0;
+                        let dragging = false;
+
+
+                        row.addEventListener(
+                            "pointerdown",
+                            e => {
+
+                                startX =
+                                    e.clientX;
+
+                                currentX =
+                                    e.clientX;
+
+                                dragging =
+                                    true;
+
+                                row.setPointerCapture(
+                                    e.pointerId
+                                );
+
+                                row.classList.add(
+                                    "swiping"
+                                );
+
+                            }
+                        );
+
+
+                        row.addEventListener(
+                            "pointermove",
+                            e => {
+
+                                if (!dragging) {
+                                    return;
+                                }
+
+
+                                currentX =
+                                    e.clientX;
+
+
+                                const delta =
+                                    currentX -
+                                    startX;
+
+
+                                if (
+                                    delta < 0
+                                ) {
+
+                                    row.style.transform =
+                                        `translateX(${Math.max(delta, -180)}px)`;
+
+                                }
+
+                            }
+                        );
+
+
+                        row.addEventListener(
+                            "pointerup",
+                            () => {
+
+                                if (!dragging) {
+                                    return;
+                                }
+
+
+                                dragging =
+                                    false;
+
+                                row.classList.remove(
+                                    "swiping"
+                                );
+
+
+                                const delta =
+                                    currentX -
+                                    startX;
+
+
+                                if (
+                                    delta <= -100
+                                ) {
+
+                                    row.style.transform =
+                                        "translateX(-100%)";
+
+
+                                    setTimeout(
+                                        () => {
+
+                                            category.items.splice(
+                                                index,
+                                                1
+                                            );
+
+                                            saveData();
+
+                                            displayAll();
+
+                                        },
+                                        150
+                                    );
+
+                                } else {
+
+                                    row.style.transform =
+                                        "translateX(0)";
+
+                                }
+
+                            }
+                        );
+
+                    }
+                );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   SWIPE DELETE
+========================================================= */
+
+function setupSwipeDelete(
+    row,
+    category,
+    index,
+    onDelete
+) {
+
+    let startX = 0;
+
+    let currentX = 0;
+
+    let dragging = false;
+
+    let pointerId = null;
+
+
+    const threshold = 100;
+
+    const maxSwipe = 180;
+
+
+    row.addEventListener(
+        "pointerdown",
+        function(e) {
+
+            if (
+                e.pointerType === "mouse" &&
+                e.button !== 0
+            ) {
+
+                return;
+
+            }
+
+
+            startX =
+                e.clientX;
+
+            currentX =
+                e.clientX;
+
+            dragging =
+                true;
+
+            pointerId =
+                e.pointerId;
+
+
+            row.setPointerCapture(
+                e.pointerId
+            );
+
+
+            row.classList.add(
+                "swiping"
+            );
+
+        }
+    );
+
+
+    row.addEventListener(
+        "pointermove",
+        function(e) {
+
+            if (
+                !dragging ||
+                e.pointerId !== pointerId
+            ) {
+
+                return;
+
+            }
+
+
+            const delta =
+                e.clientX -
+                startX;
+
+
+            if (
+                delta > 0
+            ) {
+
+                row.style.transform =
+                    "translateX(0)";
+
+                return;
+
+            }
+
+
+            currentX =
+                e.clientX;
+
+
+            const distance =
+                Math.max(
+                    delta,
+                    -maxSwipe
+                );
+
+
+            row.style.transform =
+                `translateX(${distance}px)`;
+
+        }
+    );
+
+
+    row.addEventListener(
+        "pointerup",
+        finish
+    );
+
+
+    row.addEventListener(
+        "pointercancel",
+        finish
+    );
+
+
+    function finish(e) {
+
+        if (!dragging) {
+            return;
+        }
+
+
+        const delta =
+            currentX -
+            startX;
+
+
+        dragging =
+            false;
+
+
+        row.classList.remove(
+            "swiping"
+        );
+
+
+        if (
+            delta <= -threshold
+        ) {
+
+            if (onDelete) {
+                onDelete();
+            }
+
+
+            row.style.transform =
+                "translateX(-100%)";
+
+
+            setTimeout(
+                function() {
+
+                    removeItemAt(
+                        category,
+                        index
+                    );
+
+                },
+                150
+            );
+
+        } else {
+
+            row.style.transform =
+                "translateX(0)";
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   REMOVE ITEM
+========================================================= */
+
+function removeItemAt(
+    category,
+    index
+) {
+
+    if (
+        category === "tasks"
+    ) {
+
+        tasks.splice(
+            index,
+            1
+        );
+
+    }
+
+
+    else if (
+        category === "shopping"
+    ) {
+
+        shopping.splice(
+            index,
+            1
+        );
+
+    }
+
+
+    saveData();
+
+    displayAll();
+
+}
+
+
+/* =========================================================
+   ADD ITEMS
+========================================================= */
+
+function addItem(category) {
+
+    const labels = {
+
+        tasks:
+            "task",
+
+        shopping:
+            "shopping item"
+
+    };
+
+
+    const text =
+        prompt(
+            `Add a ${labels[category]}:`
+        );
+
+
+    if (
+        !text ||
+        !text.trim()
+    ) {
+
+        return;
+
+    }
+
+
+    const value =
+        text.trim();
+
+
+    if (
+        category === "tasks"
+    ) {
+
+        tasks.push(value);
+
+    }
+
+
+    else if (
+        category === "shopping"
+    ) {
+
+        shopping.push(value);
+
+    }
+
+
+    saveData();
+
+    displayAll();
+
+}
+
+
+/* =========================================================
+   TOGGLE CHECKBOX
+========================================================= */
+
+function toggleItem(element) {
+
+    element.classList.toggle(
+        "completed"
+    );
+
+
+    const checkbox =
+        element.querySelector(
+            ".checkbox"
+        );
+
+
+    if (!checkbox) {
+        return;
+    }
+
+
+    if (
+        element.classList.contains(
+            "completed"
+        )
+    ) {
+
+        checkbox.textContent =
+            "☑";
+
+    } else {
+
+        checkbox.textContent =
+            "☐";
+
+    }
+
+}
+
+
+/* =========================================================
+   ORGANIZER
+========================================================= */
+
+function organizeDump() {
+
+    stopVoiceInput();
+
+
+    const textarea =
+        document.getElementById(
+            "brainInput"
+        );
+
+
+    if (!textarea) {
+        return;
+    }
+
+
+    const input =
+        textarea.value.trim();
+
+
+    if (!input) {
+
+        alert(
+            "Dump something first!"
+        );
+
+        return;
+
+    }
+
+
+    const thoughts =
+        parseBrainDump(input);
+
+
+    thoughts.forEach(
+        item => {
+
+            const thought =
+                item.text.trim();
+
+
+            if (!thought) {
+                return;
+            }
+
+
+            /*
+               ONLY TO DO
+            */
+
+            if (
+                item.section ===
+                "tasks"
+            ) {
+
+                if (
+                    !tasks.some(
+                        task =>
+                            task.toLowerCase() ===
+                            thought.toLowerCase()
+                    )
+                ) {
+
+                    tasks.push(
+                        thought
+                    );
+
+                }
+
+                return;
+
+            }
+
+
+            /*
+               ONLY SHOPPING
+            */
+
+            if (
+                item.section ===
+                "shopping"
+            ) {
+
+                if (
+                    !shopping.some(
+                        value =>
+                            value.toLowerCase() ===
+                            thought.toLowerCase()
+                    )
+                ) {
+
+                    shopping.push(
+                        thought
+                    );
+
+                }
+
+                return;
+
+            }
+
+
+            /*
+               REMINDERS,
+               IDEAS,
+               NOTES,
+               AND EVERYTHING ELSE
+               NOW GO TO TO DO.
+
+               CUSTOM CATEGORIES ARE
+               NEVER AUTOMATICALLY USED.
+            */
+
+            if (
+                !tasks.some(
+                    task =>
+                        task.toLowerCase() ===
+                        thought.toLowerCase()
+                )
+            ) {
+
+                tasks.push(
+                    thought
+                );
+
+            }
+
+        }
+    );
+
+
+    saveData();
+
+    displayAll();
+
+
+    textarea.value =
+        "";
+
+
+    showPage(
+        "tasks"
+    );
+
+}
+
+
+/* =========================================================
+   SIMPLE BRAIN DUMP PARSER
+========================================================= */
+
+function parseBrainDump(input) {
+
+    const thoughts = [];
+
+
+    let text =
+        input
+            .replace(
+                /\r\n/g,
+                "\n"
+            )
+            .replace(
+                /\r/g,
+                "\n"
+            );
+
+
+    text =
+        text.replace(
+            /,/g,
+            "\n"
+        );
+
+
+    const lines =
+        text
+            .split(/\n+/)
+            .map(
+                line =>
+                    line.trim()
+            )
+            .filter(Boolean);
+
+
+    const trigger =
+        /\b(?:i need to|i have to|i gotta|i should|remind me to|remind me|remember to|remember|video idea|content idea|idea|i have an idea|i got an idea|buy|buying|purchase|pick up|pickup|order|make|finish|complete|do|clean|wash|call|record|edit|upload|create|fix|build|pay|organize|check|visit|go|work|maybe record|note|notes)\b/gi;
+
+
+    function splitLine(line) {
+
+        const matches = [];
+
+        let match;
+
+
+        while (
+            (match =
+                trigger.exec(line)) !== null
+        ) {
+
+            matches.push(
+                match.index
+            );
+
+        }
+
+
+        trigger.lastIndex =
+            0;
+
+
+        if (
+            matches.length <= 1
+        ) {
+
+            return [
+                line
+            ];
+
+        }
+
+
+        const result = [];
+
+
+        for (
+            let i = 0;
+            i < matches.length;
+            i++
+        ) {
+
+            const start =
+                matches[i];
+
+
+            const end =
+                i + 1 <
+                matches.length
+                    ? matches[i + 1]
+                    : line.length;
+
+
+            const piece =
+                line
+                    .slice(
+                        start,
+                        end
+                    )
+                    .trim();
+
+
+            if (piece) {
+
+                result.push(
+                    piece
+                );
+
+            }
+
+        }
+
+
+        if (
+            matches[0] > 0
+        ) {
+
+            const before =
+                line
+                    .slice(
+                        0,
+                        matches[0]
+                    )
+                    .trim();
+
+
+            if (before) {
+
+                result.unshift(
+                    before
+                );
+
+            }
+
+        }
+
+
+        return result;
+
+    }
+
+
+    const expanded = [];
+
+
+    lines.forEach(
+        line => {
+
+            splitLine(line)
+                .forEach(
+                    piece => {
+
+                        if (
+                            piece.trim()
+                        ) {
+
+                            expanded.push(
+                                piece.trim()
+                            );
+
+                        }
+
+                    }
+                );
+
+        }
+    );
+
+
+    expanded.forEach(
+        original => {
+
+            let cleaned =
+                cleanText(
+                    original
+                );
+
+
+            if (!cleaned) {
+                return;
+            }
+
+
+            /*
+               SHOPPING
+            */
+
+            if (
+                /^(buy|buying|purchase|pick up|pickup|order)\b/i
+                    .test(cleaned)
+            ) {
+
+                let shoppingText =
+                    cleaned.replace(
+                        /^(buy|buying|purchase|pick up|pickup|order)\s*/i,
+                        ""
+                    );
+
+
+                shoppingText =
+                    removeDateWords(
+                        shoppingText
+                    );
+
+
+                const items =
+                    splitShoppingItems(
+                        shoppingText
+                    );
+
+
+                items.forEach(
+                    item => {
+
+                        if (item) {
+
+                            thoughts.push({
+
+                                text:
+                                    item,
+
+                                section:
+                                    "shopping"
+
+                            });
+
+                        }
+
+                    }
+                );
+
+
+                return;
+
+            }
+
+
+            /*
+               EVERYTHING ELSE = TO DO
+            */
+
+            cleaned =
+                cleaned.replace(
+                    /^(i need to|i have to|i gotta|i should)\s*/i,
+                    ""
+                );
+
+
+            cleaned =
+                cleaned.replace(
+                    /^maybe\s+/i,
+                    ""
+                );
+
+
+            cleaned =
+                cleanText(
+                    removeDateWords(
+                        cleaned
+                    )
+                );
+
+
+            if (cleaned) {
+
+                thoughts.push({
+
+                    text:
+                        cleaned,
+
+                    section:
+                        "tasks"
+
+                });
+
+            }
+
+        }
+    );
+
+
+    return thoughts;
+
+}
+
+
+/* =========================================================
+   SHOPPING SPLITTER
+========================================================= */
+
+function splitShoppingItems(text) {
+
+    text =
+        cleanText(
+            text
+        );
+
+
+    if (!text) {
+        return [];
+    }
+
+
+    let items =
+        text
+            .split(
+                /\s*(?:,|\band\b)\s*/i
+            )
+            .map(
+                item =>
+                    cleanText(item)
+            )
+            .filter(Boolean);
+
+
+    if (
+        items.length === 1
+    ) {
+
+        const commonItems = [
+
+            "eggs",
+            "milk",
+            "bacon",
+            "soda",
+            "bread",
+            "water",
+            "cheese",
+            "chicken",
+            "beef",
+            "rice",
+            "toothpaste",
+            "paper towels",
+            "toilet paper",
+            "snacks",
+            "chips",
+            "cereal",
+            "coffee",
+            "soap",
+            "shampoo",
+            "deodorant"
+
+        ];
+
+
+        let remaining =
+            items[0];
+
+
+        const found = [];
+
+
+        commonItems.forEach(
+            item => {
+
+                const regex =
+                    new RegExp(
+                        "\\b" +
+                        item.replace(
+                            " ",
+                            "\\s+"
+                        ) +
+                        "\\b",
+                        "i"
+                    );
+
+
+                if (
+                    regex.test(
+                        remaining
+                    )
+                ) {
+
+                    found.push(
+                        item
+                    );
+
+
+                    remaining =
+                        remaining.replace(
+                            regex,
+                            ""
+                        );
+
+                }
+
+            }
+        );
+
+
+        remaining =
+            cleanText(
+                remaining
+            );
+
+
+        if (
+            found.length > 0
+        ) {
+
+            items =
+                [
+                    ...found
+                ];
+
+
+            if (
+                remaining
+            ) {
+
+                items.push(
+                    remaining
+                );
+
+            }
+
+        }
+
+    }
+
+
+    return items;
+
+}
+
+
+/* =========================================================
+   DATE CLEANING
+========================================================= */
+
+function removeDateWords(text) {
+
+    return text
+
+        .replace(
+            /\b(today|tomorrow|tonight|this weekend|next week|next month)\b/gi,
+            ""
+        )
+
+        .replace(
+            /\b(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b/gi,
+            ""
+        )
+
+        .replace(
+            /\s+/g,
+            " "
+        )
+
+        .trim();
+
+}
+
+
+/* =========================================================
+   CLEAN TEXT
+========================================================= */
+
+function cleanText(text) {
+
+    return String(
+        text || ""
+    )
+
+        .replace(
+            /^[-*•☐☑]\s*/i,
+            ""
+        )
+
+        .replace(
+            /^\[\s*[x ]\s*\]\s*/i,
+            ""
+        )
+
+        .replace(
+            /\s+/g,
+            " "
+        )
+
+        .trim();
+
+}
+
+
+/* =========================================================
+   SAVE LISTS
+========================================================= */
+
+function loadSavedListsData() {
+
+    const saved =
+        localStorage.getItem(
+            "brainDumpSavedLists"
+        );
+
+
+    if (!saved) {
+
+        savedLists =
+            [];
+
+        return;
+
+    }
+
+
+    try {
+
+        savedLists =
+            JSON.parse(saved) || [];
+
+    } catch {
+
+        savedLists =
+            [];
+
+    }
+
+}
+
+
+function saveSavedListsData() {
+
+    localStorage.setItem(
+        "brainDumpSavedLists",
+        JSON.stringify(
+            savedLists
+        )
+    );
+
+}
+
+
+function saveCurrentList() {
+
+    const totalItems =
+        tasks.length +
+        shopping.length +
+        customCategories.reduce(
+            (
+                total,
+                category
+            ) =>
+                total +
+                category.items.length,
+            0
+        );
+
+
+    if (
+        totalItems === 0
+    ) {
+
+        alert(
+            "There is nothing to save yet."
+        );
+
+        return;
+
+    }
+
+
+    const listName =
+        prompt(
+            "What would you like to name this list?"
+        );
+
+
+    if (
+        !listName ||
+        !listName.trim()
+    ) {
+
+        return;
+
+    }
+
+
+    const newList = {
+
+        id:
+            Date.now(),
+
+        name:
+            listName.trim(),
+
+        date:
+            new Date()
+                .toLocaleString(),
+
+        tasks:
+            [...tasks],
+
+        shopping:
+            [...shopping],
+
+        customCategories:
+            JSON.parse(
+                JSON.stringify(
+                    customCategories
+                )
+            )
+
+    };
+
+
+    savedLists.unshift(
+        newList
+    );
+
+
+    saveSavedListsData();
+
+
+    alert(
+        `"${newList.name}" has been saved!`
+    );
+
+}
+
+
+/* =========================================================
+   SAVED LISTS PAGE
+========================================================= */
+
+function openSavedLists() {
+
+    loadSavedListsData();
+
+
+    const content =
+        document.getElementById(
+            "moreContent"
+        );
+
+
+    if (!content) {
+        return;
+    }
+
+
+    content.innerHTML = `
+
+        <div class="saved-lists-header">
+
+            <button
+                type="button"
+                class="back-more-button"
+                onclick="closeSavedLists()"
+            >
+                ← BACK
+            </button>
+
+            <h2>
+                Saved Lists
+            </h2>
+
+            <p>
+                Your saved Brain Dump lists
+            </p>
+
+        </div>
+
+        <div id="savedLists"></div>
+
+    `;
+
+
+    displaySavedLists();
+
+}
+
+
+function closeSavedLists() {
+
+    const content =
+        document.getElementById(
+            "moreContent"
+        );
+
+
+    if (!content) {
+        return;
+    }
+
+
+    content.innerHTML = `
+
+        <div class="page-title">
+
+            <h2>
+                MORE
+            </h2>
+
+            <p>
+                More Brain Dump options
+            </p>
+
+        </div>
+
+
+        <div class="more-menu">
+
+            <button
+                class="more-menu-item"
+                onclick="openSavedLists()"
+            >
+                <span>📋</span>
+                <span>Saved Lists</span>
+            </button>
+
+
+            <button
+                class="more-menu-item"
+                onclick="comingSoon('Settings')"
+            >
+                <span>⚙️</span>
+                <span>Settings</span>
+            </button>
+
+
+            <button
+                class="more-menu-item"
+                onclick="comingSoon('About')"
+            >
+                <span>ℹ️</span>
+                <span>About</span>
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+function displaySavedLists() {
+
+    const container =
+        document.getElementById(
+            "savedLists"
+        );
+
+
+    if (!container) {
+        return;
+    }
+
+
+    if (
+        savedLists.length === 0
+    ) {
+
+        container.innerHTML = `
+
+            <div class="no-saved-lists">
+                No saved lists yet.
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        savedLists.map(
+            list => `
+
+                <div class="saved-list-card">
+
+                    <div class="saved-list-info">
+
+                        <div class="saved-list-name">
+                            ${escapeHTML(list.name)}
+                        </div>
+
+                        <div class="saved-list-date">
+                            Saved ${escapeHTML(list.date)}
+                        </div>
+
+                    </div>
+
+
+                    <div class="saved-list-buttons">
+
+                        <button
+                            class="load-list-button"
+                            onclick="loadSavedList(${list.id})"
+                        >
+                            LOAD
+                        </button>
+
+
+                        <button
+                            class="delete-list-button"
+                            onclick="deleteSavedList(${list.id})"
+                        >
+                            DELETE
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `
+        ).join("");
+
+}
+
+
+function loadSavedList(id) {
+
+    const list =
+        savedLists.find(
+            savedList =>
+                savedList.id === id
+        );
+
+
+    if (!list) {
+
+        alert(
+            "Could not find that saved list."
+        );
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+            `Load "${list.name}"?\n\n` +
+            "This will replace your current My Tasks list."
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    tasks =
+        [
+            ...(list.tasks || [])
+        ];
+
+
+    shopping =
+        [
+            ...(list.shopping || [])
+        ];
+
+
+    customCategories =
+        JSON.parse(
+            JSON.stringify(
+                list.customCategories || []
+            )
+        );
+
+
+    saveData();
+
+    displayAll();
+
+    closeSavedLists();
+
+    showPage(
+        "tasks"
+    );
+
+
+    alert(
+        `"${list.name}" loaded.`
+    );
+
+}
+
+
+function deleteSavedList(id) {
+
+    const list =
+        savedLists.find(
+            savedList =>
+                savedList.id === id
+        );
+
+
+    if (!list) {
+        return;
+    }
+
+
+    const confirmed =
+        confirm(
+            `Delete "${list.name}"?\n\n` +
+            "This cannot be undone."
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    savedLists =
+        savedLists.filter(
+            savedList =>
+                savedList.id !== id
+        );
+
+
+    saveSavedListsData();
+
+    displaySavedLists();
+
+}
+
+
+/* =========================================================
+   CLEAR ALL
+========================================================= */
+
+function clearAllData() {
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to clear everything?\n\n" +
+            "This will delete your To Do items, Shopping List items, and custom category items."
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    tasks =
+        [];
+
+
+    shopping =
+        [];
+
+
+    customCategories =
+        [];
+
+
+    localStorage.removeItem(
+        "brainDumpData"
+    );
+
+
+    displayAll();
+
+
+    alert(
+        "Brain Dump has been cleared."
+    );
+
+}
+
+
+/* =========================================================
+   HTML SECURITY
+========================================================= */
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        String(text);
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   VOICE RECOGNITION
+========================================================= */
+
+function setupVoiceRecognition() {
+
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+
+    if (!SpeechRecognition) {
+
+        console.warn(
+            "Speech recognition is not supported."
+        );
+
+        return;
+
+    }
+
+
+    recognition =
+        new SpeechRecognition();
+
+
+    recognition.continuous =
+        true;
+
+
+    recognition.interimResults =
+        true;
+
+
+    recognition.lang =
+        "en-US";
+
+
+    recognition.onstart =
+        function() {
+
+            isListening =
+                true;
+
+
+            const micButton =
+                document.getElementById(
+                    "micButton"
+                );
+
+
+            const voiceStatus =
+                document.getElementById(
+                    "voiceStatus"
+                );
+
+
+            if (micButton) {
+
+                micButton.classList.add(
+                    "listening"
+                );
+
+
+                micButton.textContent =
+                    "⏹️";
+
+            }
+
+
+            if (voiceStatus) {
+
+                voiceStatus.textContent =
+                    "Listening... speak freely.";
+
+
+                voiceStatus.classList.add(
+                    "listening"
+                );
+
+            }
+
+        };
+
+
+    recognition.onresult =
+        function(event) {
+
+            let finalTranscript =
+                "";
+
+
+            for (
+                let i =
+                    event.resultIndex;
+
+                i <
+                    event.results.length;
+
+                i++
+            ) {
+
+                if (
+                    event.results[i].isFinal
+                ) {
+
+                    finalTranscript +=
+                        event
+                            .results[i][0]
+                            .transcript;
+
+                }
+
+            }
+
+
+            if (
+                !finalTranscript.trim()
+            ) {
+
+                return;
+
+            }
+
+
+            finalTranscript =
+                finalTranscript
+
+                    .replace(
+                        /\bnew line\b/gi,
+                        "\n"
+                    )
+
+                    .replace(
+                        /\bnewline\b/gi,
+                        "\n"
+                    )
+
+                    .replace(
+                        /\bnext line\b/gi,
+                        "\n"
+                    )
+
+                    .replace(
+                        /\benter\b/gi,
+                        "\n"
+                    );
+
+
+            const textarea =
+                document.getElementById(
+                    "brainInput"
+                );
+
+
+            if (!textarea) {
+                return;
+            }
+
+
+            if (
+                textarea.value.trim()
+            ) {
+
+                textarea.value +=
+                    " " +
+                    finalTranscript.trim();
+
+            } else {
+
+                textarea.value =
+                    finalTranscript.trim();
+
+            }
+
+
+            textarea.focus();
+
+
+            textarea.setSelectionRange(
+                textarea.value.length,
+                textarea.value.length
+            );
+
+        };
+
+}
+
+
+/* =========================================================
+   VOICE TOGGLE
+========================================================= */
+
+function toggleVoiceInput() {
+
+    if (!recognition) {
+
+        alert(
+            "Voice input is not supported by this browser."
+        );
+
+        return;
+
+    }
+
+
+    if (isListening) {
+
+        stopVoiceInput();
+
+        return;
+
+    }
+
+
+    try {
+
+        recognition.start();
+
+    } catch (error) {
+
+        console.warn(
+            "Could not start voice recognition.",
+            error
+        );
+
+    }
+
+}
+
+
+function stopVoiceInput() {
+
+    if (
+        recognition &&
+        isListening
+    ) {
+
+        try {
+
+            recognition.stop();
+
+        } catch {}
+
+    }
+
+
+    isListening =
+        false;
+
+
+    const micButton =
+        document.getElementById(
+            "micButton"
+        );
+
+
+    const voiceStatus =
+        document.getElementById(
+            "voiceStatus"
+        );
+
+
+    if (micButton) {
+
+        micButton.classList.remove(
+            "listening"
+        );
+
+
+        micButton.textContent =
+            "🎙️";
+
+    }
+
+
+    if (voiceStatus) {
+
+        voiceStatus.textContent =
+            "Don't organize it. Just dump it.";
+
+
+        voiceStatus.classList.remove(
+            "listening"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+function setupBrainDumpKeyboard() {
+
+    const textarea =
+        document.getElementById(
+            "brainInput"
+        );
+
+
+    if (!textarea) {
+        return;
+    }
+
+
+    textarea.addEventListener(
+        "keydown",
+        function(e) {
+
+            if (
+                e.key === "Enter" &&
+                e.shiftKey
+            ) {
+
+                return;
+
+            }
+
+
+            if (
+                e.key === "Enter"
+            ) {
+
+                e.preventDefault();
+
+                organizeDump();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   COMING SOON
+========================================================= */
+
+function comingSoon(section) {
+
+    alert(
+        section +
+        " is coming soon."
+    );
+
+}
+
+
+/* =========================================================
+   START APP
+========================================================= */
+
+window.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        loadData();
+
+        loadSavedListsData();
+
+        setupVoiceRecognition();
+
+        setupBrainDumpKeyboard();
+
+
+        /*
+           Brain Dump remains
+           the landing page.
+        */
+
+        showPage(
+            "dump"
+        );
+
+    }
+);
+
+</script>
+
+
+<script>
+
+if (
+    "serviceWorker" in navigator
+) {
+
+    window.addEventListener(
+        "load",
+        () => {
+
+            navigator.serviceWorker.register(
+                "./sw.js"
+            );
+
+        }
+    );
+
+}
+
+</script>
+
+</body>
+</html>
