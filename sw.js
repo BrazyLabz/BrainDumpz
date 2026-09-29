@@ -1,4 +1,4 @@
-const CACHE_NAME = "brain-dumpz-v2";
+const CACHE_NAME = "brain-dumpz-v3";
 
 const FILES_TO_CACHE = [
   "./",
