@@ -1583,11 +1583,61 @@ textarea:focus::placeholder {
     }
 }
 
+/* GozaLinkz / Recibin visual language */
+:root { color-scheme: dark; --bd-purple:#a45cff; --bd-pink:#e9b5ff; --bd-line:#ffffff1b; --bd-muted:#bdb3c7; }
+body { background:radial-gradient(ellipse at 83% 8%,#bd1b383d,transparent 31%),radial-gradient(ellipse at 79% 42%,#8b15352b,transparent 35%),radial-gradient(ellipse at 12% -8%,#602d8d66,transparent 42%),radial-gradient(ellipse at 90% 30%,#60234a30,transparent 35%),#0d0b13; color:#f8f5fc; font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; }
+.page-title { margin:14px 0 20px; }
+.page-title h2 { font-size:clamp(30px,5vw,40px); letter-spacing:-1.5px; }
+.page-title p,.tagline { color:var(--bd-muted); }
+.section,.item,.more-menu-item,.saved-list-card,.no-saved-lists { background:linear-gradient(140deg,#201b2a,#15131a); border-color:var(--bd-line); box-shadow:0 14px 38px #0003; }
+.section { border-radius:20px; padding:20px; }
+.item { border-radius:14px; }
+.item:hover { background:#211c29; border-color:#bd8dff77; }
+.add-item,.save-list-button,.clear-all-button,.back-more-button { background:#ffffff0a; color:#e8dcf2; border-color:var(--bd-line); border-radius:12px; }
+.add-item:hover,.save-list-button:hover,.back-more-button:hover { background:#ffffff14; border-color:#bd8dff77; color:#fff; }
+.add-category-button { border-color:#bd8dff55; color:#d7b4ff; background:linear-gradient(140deg,#201b2a,#15131a); border-radius:17px; }
+.add-category-button:hover { border-color:#bd8dff; }
+.bottom-nav { background:#0d0b13e8; border-color:#ffffff1c; border-radius:20px; backdrop-filter:blur(15px); box-shadow:0 10px 34px #0005; }
+.nav-button[aria-current="page"] { color:#d7b4ff; }
+.nav-center { background:linear-gradient(140deg,#c99aff,#8154df); border-color:#ffffff55; box-shadow:0 8px 28px #a45cff40; }
+.about-panel,.setting-card { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:17px; border:1px solid var(--bd-line); border-radius:17px; background:linear-gradient(140deg,#201b2a,#15131a); margin:10px 0; }
+.about-panel { justify-content:flex-start; }
+.about-panel img { width:62px;height:62px;object-fit:contain;border-radius:17px;filter:drop-shadow(0 8px 20px #a45cff44); }
+.about-panel h3,.about-panel p { margin:0 0 4px; }
+.about-panel p,.settings-note,.setting-card small { color:var(--bd-muted);font-size:13px; }
+.support-link { display:inline-flex;align-items:center;gap:9px;padding:12px 16px;border-radius:14px;background:linear-gradient(110deg,#e9b5ff,#bd8dff);color:#21142c;text-decoration:none;font-weight:800;box-shadow:0 8px 26px #a45cff24; }
+.support-link:hover { filter:brightness(1.08);transform:translateY(-1px); }
+.settings-tabs { display:flex;gap:8px;margin:15px 0; }
+.settings-tabs button { padding:9px 14px;border-radius:12px;background:#ffffff08;border:1px solid var(--bd-line);color:#c8bdd0;cursor:pointer; }
+.settings-tabs button.active { color:#e4cbff;background:#a45cff22;border-color:#bd8dff77; }
+.settings-page { display:none;gap:10px; }
+.settings-page.active { display:grid; }
+.setting-card b,.setting-card small { display:block; }
+.settings-select { padding:10px 12px;border-radius:12px;background:#211b29;color:#fff;border:1px solid var(--bd-line); }
+.about-copy { color:#d3cbd9;line-height:1.65; }
+.about-copy h3 { color:#fff;margin:20px 0 6px; }
+.about-copy p { margin:7px 0; }
+.about-copy .about-credit { color:var(--bd-muted);margin-top:18px; }
+@media(max-width:600px){.section{padding:16px}.about-panel{align-items:flex-start}.setting-card{align-items:flex-start;flex-wrap:wrap}}
+
+/* Branded splash intro */
+.app { animation: appEntrance 1.95s ease both; }
+.intro-splash { position:fixed;inset:0;z-index:100000;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse at 50% 44%,#6e328b88 0,transparent 38%),radial-gradient(ellipse at 80% 15%,#7b233d66 0,transparent 42%),#0d0b13cc;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);animation:splashFade 1.95s ease forwards;pointer-events:none; }
+.intro-logo { width:min(44vmin,280px);height:min(44vmin,280px);object-fit:contain;filter:drop-shadow(0 18px 50px #bd8dff88);animation:logoPopBounce 1.95s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes logoPopBounce { 0%{opacity:0;transform:scale(0)} 34%{opacity:1;transform:scale(1.5)} 48%{opacity:1;transform:scale(1.2)} 59%{opacity:1;transform:scale(1.32)} 69%{opacity:1;transform:scale(1.2)} 78%{opacity:1;transform:scale(1.2)} 100%{opacity:0;transform:scale(1.75)} }
+@keyframes splashFade { 0%,70%{opacity:1} 100%{opacity:0;visibility:hidden} }
+@keyframes appEntrance { 0%,65%{opacity:0;transform:translateY(8px)} 100%{opacity:1;transform:translateY(0)} }
+@media(prefers-reduced-motion:reduce){.app{animation-duration:.25s}.intro-splash{animation-duration:.4s}.intro-logo{animation-duration:.4s}}
+
 </style>
 </head>
 
 
 <body>
+
+<div class="intro-splash" aria-hidden="true">
+    <img class="intro-logo" src="BDz.png" alt="">
+</div>
 
 <main class="app">
 
@@ -1841,7 +1891,7 @@ textarea:focus::placeholder {
 
                             <button
                                 class="more-menu-item"
-                                onclick="comingSoon('Settings')"
+                                onclick="openSettingsAbout('settings')"
                             >
                                 <span>⚙️</span>
                                 <span>Settings</span>
@@ -1850,7 +1900,7 @@ textarea:focus::placeholder {
 
                             <button
                                 class="more-menu-item"
-                                onclick="comingSoon('About')"
+                                onclick="openSettingsAbout('about')"
                             >
                                 <span>ℹ️</span>
                                 <span>About</span>
@@ -2055,6 +2105,11 @@ function loadData() {
             )
                 ? data.customCategories
                 : [];
+
+        const beforeCleanup = tasks.length + shopping.length;
+        tasks = tasks.filter(item => !isSpeechFiller(item));
+        shopping = shopping.filter(item => !isSpeechFiller(item));
+        if (tasks.length + shopping.length !== beforeCleanup) saveData();
 
 
     } catch (error) {
@@ -3169,285 +3224,89 @@ function organizeDump() {
    SIMPLE BRAIN DUMP PARSER
 ========================================================= */
 
+function isSpeechFiller(value) {
+    const normalized = String(value || "")
+        .toLowerCase()
+        .replace(/[’‘]/g, "'")
+        .replace(/[.!?,;…]+/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    const lowSignalPhrases = new Set([
+        "okay", "ok", "so", "uh", "um", "erm", "hmm", "oh", "ah",
+        "wait", "no", "maybe", "well", "like", "right", "yeah", "yep",
+        "i think", "i don't know", "i do not know", "i guess", "you know",
+        "i mean", "let me think", "let's see", "never mind", "just make a", "just make an",
+        "just make the", "make a", "make an", "make the"
+    ]);
+    return lowSignalPhrases.has(normalized);
+}
+
 function parseBrainDump(input) {
 
     const thoughts = [];
+    const text = String(input || "")
+        .replace(/\r\n?/g, "\n")
+        .replace(/[!?]+(?=\s|$)/g, ".");
 
+    // A period ends a command. Commas stay inside the command so they can
+    // separate shopping items without breaking the command into fragments.
+    const sentences = text.split(/[.\n]+/).map(value => value.trim()).filter(Boolean);
+    const commandStart = /\b(?:i\s+want\s+to\s+(?:buy|purchase|pick\s+up|order)|(?:buy|buying|purchase|pick\s+up|pickup|order)|(?:then\s+)?(?:maybe\s+)?(?:i\s+need\s+to|i\s+have\s+to|i\s+gotta|i\s+should|remind\s+me\s+to|remember\s+to)|but\s+first|(?:video|content)\s+idea|i\s+(?:have|got)\s+an?\s+idea|maybe\s+record|notes?)\b/gi;
 
-    let text =
-        input
-            .replace(
-                /\r\n/g,
-                "\n"
-            )
-            .replace(
-                /\r/g,
-                "\n"
-            );
-
-
-    text =
-        text.replace(
-            /,/g,
-            "\n"
-        );
-
-
-    const lines =
-        text
-            .split(/\n+/)
-            .map(
-                line =>
-                    line.trim()
-            )
-            .filter(Boolean);
-
-
-    const trigger =
-        /\b(?:i need to|i have to|i gotta|i should|remind me to|remind me|remember to|remember|video idea|content idea|idea|i have an idea|i got an idea|buy|buying|purchase|pick up|pickup|order|make|finish|complete|do|clean|wash|call|record|edit|upload|create|fix|build|pay|organize|check|visit|go|work|maybe record|note|notes)\b/gi;
-
-
-    function splitLine(line) {
-
-        const matches = [];
-
+    function splitCommands(sentence) {
+        const starts = [];
         let match;
+        commandStart.lastIndex = 0;
+        while ((match = commandStart.exec(sentence)) !== null) starts.push(match.index);
+        commandStart.lastIndex = 0;
 
-
-        while (
-            (match =
-                trigger.exec(line)) !== null
-        ) {
-
-            matches.push(
-                match.index
-            );
-
-        }
-
-
-        trigger.lastIndex =
-            0;
-
-
-        if (
-            matches.length <= 1
-        ) {
-
-            return [
-                line
-            ];
-
-        }
-
-
-        const result = [];
-
-
-        for (
-            let i = 0;
-            i < matches.length;
-            i++
-        ) {
-
-            const start =
-                matches[i];
-
-
-            const end =
-                i + 1 <
-                matches.length
-                    ? matches[i + 1]
-                    : line.length;
-
-
-            const piece =
-                line
-                    .slice(
-                        start,
-                        end
-                    )
-                    .trim();
-
-
-            if (piece) {
-
-                result.push(
-                    piece
-                );
-
-            }
-
-        }
-
-
-        if (
-            matches[0] > 0
-        ) {
-
-            const before =
-                line
-                    .slice(
-                        0,
-                        matches[0]
-                    )
-                    .trim();
-
-
-            if (before) {
-
-                result.unshift(
-                    before
-                );
-
-            }
-
-        }
-
-
-        return result;
-
+        if (!starts.length) return [sentence];
+        const pieces = [];
+        if (starts[0] > 0) pieces.push(sentence.slice(0, starts[0]));
+        starts.forEach((start, index) => {
+            const end = starts[index + 1] ?? sentence.length;
+            const piece = sentence.slice(start, end).trim();
+            if (piece) pieces.push(piece);
+        });
+        return pieces;
     }
 
+    sentences.flatMap(splitCommands).forEach(original => {
+        let cleaned = cleanText(original).replace(/^then\s+/i, "");
+        if (!cleaned) return;
 
-    const expanded = [];
-
-
-    lines.forEach(
-        line => {
-
-            splitLine(line)
-                .forEach(
-                    piece => {
-
-                        if (
-                            piece.trim()
-                        ) {
-
-                            expanded.push(
-                                piece.trim()
-                            );
-
-                        }
-
-                    }
-                );
-
+        const buyCommand = /^(?:i\s+want\s+to\s+)?(?:buy|buying|purchase|pick\s+up|pickup|order)\b/i;
+        if (buyCommand.test(cleaned)) {
+            const shoppingText = removeDateWords(cleaned.replace(buyCommand, ""));
+            splitShoppingItems(shoppingText).forEach(item => {
+                if (item && !isSpeechFiller(item)) thoughts.push({ text: item, section: "shopping" });
+            });
+            return;
         }
-    );
 
+        if (/^but\s+first\b/i.test(cleaned)) return;
+        cleaned = cleaned
+            .replace(/^(?:(?:maybe|also)\s+)*(?:i\s+need\s+to|i\s+have\s+to|i\s+gotta|i\s+should|remind\s+me\s+to|remember\s+to)\s*/i, "")
+            .replace(/^(?:maybe|also)[,\s]+/i, "")
+            .replace(/^finally\s+/i, "")
+            .replace(/[,;]?\s*but\s+first\s*$/i, "");
 
-    expanded.forEach(
-        original => {
-
-            let cleaned =
-                cleanText(
-                    original
-                );
-
-
-            if (!cleaned) {
-                return;
-            }
-
-
-            /*
-               SHOPPING
-            */
-
-            if (
-                /^(buy|buying|purchase|pick up|pickup|order)\b/i
-                    .test(cleaned)
-            ) {
-
-                let shoppingText =
-                    cleaned.replace(
-                        /^(buy|buying|purchase|pick up|pickup|order)\s*/i,
-                        ""
-                    );
-
-
-                shoppingText =
-                    removeDateWords(
-                        shoppingText
-                    );
-
-
-                const items =
-                    splitShoppingItems(
-                        shoppingText
-                    );
-
-
-                items.forEach(
-                    item => {
-
-                        if (item) {
-
-                            thoughts.push({
-
-                                text:
-                                    item,
-
-                                section:
-                                    "shopping"
-
-                            });
-
-                        }
-
-                    }
-                );
-
-
-                return;
-
-            }
-
-
-            /*
-               EVERYTHING ELSE = TO DO
-            */
-
-            cleaned =
-                cleaned.replace(
-                    /^(i need to|i have to|i gotta|i should)\s*/i,
-                    ""
-                );
-
-
-            cleaned =
-                cleaned.replace(
-                    /^maybe\s+/i,
-                    ""
-                );
-
-
-            cleaned =
-                cleanText(
-                    removeDateWords(
-                        cleaned
-                    )
-                );
-
-
-            if (cleaned) {
-
-                thoughts.push({
-
-                    text:
-                        cleaned,
-
-                    section:
-                        "tasks"
-
-                });
-
-            }
-
-        }
-    );
-
+        const taskParts = cleanText(removeDateWords(cleaned))
+            .split(/\s*,\s*(?:and\s+)?/i)
+            .map(part => cleanText(part)
+                .replace(/^(?:and|also)\b[\s,]*/i, "")
+                .replace(/^never\s+mind\b[,\s]*/i, "")
+                .replace(/[,;]?\s*never\s+mind\s*$/i, "")
+                .replace(/[,;]+\s*$/, "")
+                .replace(/\s+\band\s*$/i, "")
+                .trim())
+            .filter(part => Boolean(part) && !/^and$/i.test(part));
+        taskParts.forEach(part => {
+            // This is personal context, not an action to put on the task list.
+            if (isSpeechFiller(part) || /^my brain feels like\b/i.test(part)) return;
+            thoughts.push({ text: part, section: "tasks" });
+        });
+    });
 
     return thoughts;
 
@@ -3788,6 +3647,72 @@ function saveCurrentList() {
 
 }
 
+/* =========================================================
+   SETTINGS AND ABOUT
+========================================================= */
+
+function openSettingsAbout(page = "settings") {
+    const content = document.getElementById("moreContent");
+    if (!content) return;
+
+    let settings = { homePage: "dump", introDefaultUpdated: true };
+    try {
+        settings = { ...settings, ...JSON.parse(localStorage.getItem("brainDumpSettings") || "{}") };
+    } catch {}
+
+    content.innerHTML = `
+        <button type="button" class="back-more-button" onclick="closeSavedLists()">← BACK</button>
+        <div class="settings-title page-title"><h2>Settings &amp; About</h2><p>Make Brain Dumpz feel like yours.</p></div>
+        <div class="settings-tabs" role="tablist" aria-label="Settings and About">
+            <button type="button" data-settings-tab="settings" onclick="setSettingsTab('settings')">Settings</button>
+            <button type="button" data-settings-tab="about" onclick="setSettingsTab('about')">About</button>
+        </div>
+        <section class="settings-page" id="settingsPanel">
+            <div class="setting-card"><div><b>Default page</b><small>Choose what opens when you launch Brain Dumpz.</small></div>
+                <select class="settings-select" id="defaultPageSelect" aria-label="Default page">
+                    <option value="tasks">My Tasks</option><option value="dump">Brain Dump</option>
+                </select>
+            </div>
+            <p class="settings-note">Your tasks, saved lists, and preferences stay on this device.</p>
+        </section>
+        <section class="settings-page" id="aboutPanel">
+            <div class="about-panel"><img src="BDz.png" alt="Brain Dumpz app icon"><div><span class="beta-tag">A FREE TOOL BY BRYAN</span><h3>Brain Dumpz</h3><p>Get it out. Get organized.</p></div></div>
+            <div class="about-copy">
+                <p>Hi! My name is Bryan, and this is my first coding application. I built Brain Dumpz to create something simple that can help thousands of people. My bigger goal is to keep building free tools that are useful, easy to understand, and accessible to everyone.</p>
+                <h3>What is Brain Dumpz?</h3>
+                <p>Brain Dumpz is a simple organization tool designed to help you get thoughts out of your head instantly. Write down tasks, ideas, reminders, plans, random thoughts, or anything else you don't want to forget. Brain Dumpz helps organize them into categories, making it easier to see what you need to do, remember, plan, or come back to later.</p>
+                <p><strong>Think it → Dump it → Organize it → Get it done.</strong></p>
+                <h3>How to use Brain Dumpz</h3>
+                <p>Open Brain Dump and write whatever is on your mind. It doesn't need to be polished. Organize your thoughts into My Tasks, then use More to find other organized thoughts and saved lists. Save a list whenever you want to return to it later. When your brain gets crowded again, come back and dump it.</p>
+                <h3>Why I made it</h3>
+                <p>I wanted to remove the pressure of “How do I organize all this?” When your brain feels crowded, Brain Dumpz gives you a place to put it all first and organize it afterward.</p>
+                <p>This is only the beginning. I'm learning as I build, and I hope Brain Dumpz eventually becomes one of many free tools that make everyday life a little easier.</p>
+                <p class="about-credit">Made with ❤️ by Bryan</p>
+            </div>
+            <a class="support-link" href="https://ko-fi.com/brazylabz" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">☕</span> Buy me a coffee on Ko-fi</a>
+        </section>
+    `;
+
+    const select = document.getElementById("defaultPageSelect");
+    select.value = settings.homePage === "dump" ? "dump" : "tasks";
+    select.addEventListener("change", () => {
+        const next = { homePage: select.value, introDefaultUpdated: true };
+        localStorage.setItem("brainDumpSettings", JSON.stringify(next));
+    });
+    setSettingsTab(page);
+}
+
+function setSettingsTab(page) {
+    const isAbout = page === "about";
+    document.getElementById("settingsPanel")?.classList.toggle("active", !isAbout);
+    document.getElementById("aboutPanel")?.classList.toggle("active", isAbout);
+    document.querySelectorAll("[data-settings-tab]").forEach(button => {
+        const active = button.dataset.settingsTab === page;
+        button.classList.toggle("active", active);
+        button.setAttribute("aria-selected", String(active));
+    });
+}
+
 
 /* =========================================================
    SAVED LISTS PAGE
@@ -3880,19 +3805,13 @@ function closeSavedLists() {
             </button>
 
 
-            <button
-                class="more-menu-item"
-                onclick="comingSoon('Settings')"
-            >
+            <button class="more-menu-item" onclick="openSettingsAbout('settings')">
                 <span>⚙️</span>
                 <span>Settings</span>
             </button>
 
 
-            <button
-                class="more-menu-item"
-                onclick="comingSoon('About')"
-            >
+            <button class="more-menu-item" onclick="openSettingsAbout('about')">
                 <span>ℹ️</span>
                 <span>About</span>
             </button>
@@ -4525,14 +4444,17 @@ window.addEventListener(
         setupBrainDumpKeyboard();
 
 
-        /*
-           Brain Dump remains
-           the landing page.
-        */
-
-        showPage(
-            "dump"
-        );
+        let defaultPage = "dump";
+        try {
+            const settings = JSON.parse(localStorage.getItem("brainDumpSettings") || "{}");
+            if (!settings.introDefaultUpdated) {
+                settings.homePage = "dump";
+                settings.introDefaultUpdated = true;
+                localStorage.setItem("brainDumpSettings", JSON.stringify(settings));
+            }
+            defaultPage = settings.homePage === "tasks" ? "tasks" : "dump";
+        } catch {}
+        showPage(defaultPage);
 
     }
 );
